@@ -1,16 +1,10 @@
-
+//Equipe : Filali Yasmine - Cheamou Doha
 package fr.univ_montpellier.fsd.sudoku.ppc;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
+import org.apache.commons.cli.*;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.variables.IntVar;
+
 import static org.chocosolver.solver.search.strategy.Search.minDomLBSearch;
 import static org.chocosolver.util.tools.ArrayUtils.append;
 
@@ -26,7 +20,6 @@ public class Sudoku {
 	Model model;
 
 	public static void main(String[] args) throws ParseException {
-
 		final Options options = configParameters();
 		final CommandLineParser parser = new DefaultParser();
 		final CommandLine line = parser.parse(options, args);
@@ -47,26 +40,54 @@ public class Sudoku {
 		s = (int) Math.sqrt(n);
 
 		new Sudoku().solve();
+		new Sudoku().solveAll();
+
+
 	}
 
 	public void solve() {
-
 		buildModel();
 		model.getSolver().showStatistics();
 		model.getSolver().solve();
-		
+
+
 		StringBuilder st = new StringBuilder(String.format("Sudoku -- %s\n", instance, " X ", instance));
 		st.append("\t");
+
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				st.append(rows[i][j]).append("\t\t\t");
 			}
 			st.append("\n\t");
 		}
+		System.out.println( st.toString()+ "\n" );
 
-		System.out.println(st.toString());
+
 	}
 
+	public void solveAll() {
+
+		buildModel();
+
+		model.getSolver().showStatistics();
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Toutes les Solutions");
+
+		while (model.getSolver().solve()) {
+
+			StringBuilder st = new StringBuilder(String.format("Sudoku -- %s\n", instance, " X ", instance));
+			st.append("\t");
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					st.append(rows[i][j]).append("\t\t\t");
+				}
+				st.append("\n\t");
+			}
+
+			System.out.println(st.toString());
+
+		}
+	}
 	public void buildModel() {
 		model = new Model();
 
@@ -147,3 +168,4 @@ public class Sudoku {
 	
 
 }
+
