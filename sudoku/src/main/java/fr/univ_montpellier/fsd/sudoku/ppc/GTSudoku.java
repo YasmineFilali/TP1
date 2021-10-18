@@ -1,4 +1,4 @@
-
+//Equipe : Filali Yasmine - Chemaou Doha
 package fr.univ_montpellier.fsd.sudoku.ppc;
 
 import org.apache.commons.cli.CommandLine;
@@ -37,7 +37,7 @@ public class GTSudoku {
 			formatter.printHelp("sudoku", options, true);
 			System.exit(0);
 		}
-		instance = 4;
+		instance = 9;
 		// Check arguments and options
 		for (Option opt : line.getOptions()) {
 			checkOption(line, opt.getLongOpt());
@@ -46,7 +46,7 @@ public class GTSudoku {
 		n = instance;
 		s = (int) Math.sqrt(n);
 
-		new Sudoku().solve();
+		new GTSudoku().solve();
 	}
 
 	public void solve() {
@@ -101,9 +101,132 @@ public class GTSudoku {
 		
 		// --------------------------------------
 		// TODO: add constraints here
-
-		
-		
+		//Ligne1
+		model.arithm(rows[0][0], "<", rows[0][1]).post();
+		model.arithm(rows[0][1], ">", rows[0][2]).post();
+		model.arithm(rows[0][3], "<", rows[0][4]).post();
+		model.arithm(rows[0][4], "<", rows[0][5]).post();
+		model.arithm(rows[0][6], ">", rows[0][7]).post();
+		model.arithm(rows[0][7], "<", rows[0][8]).post();
+		//Ligne2
+		model.arithm(rows[1][0], "<", rows[1][1]).post();
+		model.arithm(rows[1][1], "<", rows[1][2]).post();
+		model.arithm(rows[1][3], "<", rows[1][4]).post();
+		model.arithm(rows[1][4], "<", rows[1][5]).post();
+		model.arithm(rows[1][6], "<", rows[1][7]).post();
+		model.arithm(rows[1][7], "<", rows[1][8]).post();
+		//Ligne3
+		model.arithm(rows[2][0], ">", rows[2][1]).post();
+		model.arithm(rows[2][1], "<", rows[2][2]).post();
+		model.arithm(rows[2][3], ">", rows[2][4]).post();
+		model.arithm(rows[2][4], ">", rows[2][5]).post();
+		model.arithm(rows[2][6], ">", rows[2][7]).post();
+		model.arithm(rows[2][7], "<", rows[2][8]).post();
+		//Ligne4
+		model.arithm(rows[3][0], ">", rows[3][1]).post();
+		model.arithm(rows[3][1], ">", rows[3][2]).post();
+		model.arithm(rows[3][1], "<", rows[3][4]).post();
+		model.arithm(rows[3][4], ">", rows[3][5]).post();
+		model.arithm(rows[3][6], "<", rows[3][7]).post();
+		model.arithm(rows[3][7], "<", rows[3][8]).post();
+		//Ligne5
+		model.arithm(rows[4][0], "<", rows[4][1]).post();
+		model.arithm(rows[4][1], ">", rows[4][2]).post();
+		model.arithm(rows[4][3], ">", rows[4][4]).post();
+		model.arithm(rows[4][4], ">", rows[4][5]).post();
+		model.arithm(rows[4][6], ">", rows[4][7]).post();
+		model.arithm(rows[4][7], ">", rows[4][8]).post();
+		//Ligne6
+		model.arithm(rows[5][0], "<", rows[5][1]).post();
+		model.arithm(rows[5][1], "<", rows[5][2]).post();
+		model.arithm(rows[5][3], "<", rows[5][4]).post();
+		model.arithm(rows[5][4], ">", rows[5][5]).post();
+		model.arithm(rows[5][6], "<", rows[5][7]).post();
+		model.arithm(rows[5][7], ">", rows[5][8]).post();
+		//Ligne7
+		model.arithm(rows[6][0], ">", rows[6][1]).post();
+		model.arithm(rows[6][1], "<", rows[6][2]).post();
+		model.arithm(rows[6][3], ">", rows[6][4]).post();
+		model.arithm(rows[6][4], ">", rows[6][5]).post();
+		model.arithm(rows[6][6], "<", rows[6][7]).post();
+		model.arithm(rows[6][7], "<", rows[6][8]).post();
+		//Ligne8
+		model.arithm(rows[7][0], ">", rows[7][1]).post();
+		model.arithm(rows[7][1], ">", rows[7][2]).post();
+		model.arithm(rows[7][3], ">", rows[7][4]).post();
+		model.arithm(rows[7][4], ">", rows[7][5]).post();
+		model.arithm(rows[7][6], ">", rows[7][7]).post();
+		model.arithm(rows[7][7], ">", rows[7][8]).post();
+		//Ligne9
+		model.arithm(rows[8][0], ">", rows[8][1]).post();
+		model.arithm(rows[8][1], "<", rows[8][2]).post();
+		model.arithm(rows[8][3], ">", rows[8][4]).post();
+		model.arithm(rows[8][4], "<", rows[8][5]).post();
+		model.arithm(rows[8][6], ">", rows[8][7]).post();
+		model.arithm(rows[8][7], ">", rows[8][8]).post();
+		//colonne1
+		model.arithm(rows[0][0], "<", rows[1][0]).post();
+		model.arithm(rows[1][0], ">", rows[2][0]).post();
+		model.arithm(rows[3][0], ">", rows[4][0]).post();
+		model.arithm(rows[4][0], "<", rows[5][0]).post();
+		model.arithm(rows[6][0], "<", rows[7][0]).post();
+		model.arithm(rows[7][0], ">", rows[8][0]).post();
+		//colonne2
+		model.arithm(rows[0][1], "<", rows[1][1]).post();
+		model.arithm(rows[1][1], ">", rows[2][1]).post();
+		model.arithm(rows[3][1], "<", rows[4][1]).post();
+		model.arithm(rows[4][1], ">", rows[5][1]).post();
+		model.arithm(rows[6][1], "<", rows[7][1]).post();
+		model.arithm(rows[7][1], ">", rows[8][1]).post();
+		//colonne3
+		model.arithm(rows[0][2], "<", rows[1][2]).post();
+		model.arithm(rows[1][2], ">", rows[2][2]).post();
+		model.arithm(rows[3][2], "<", rows[4][2]).post();
+		model.arithm(rows[4][2], "<", rows[5][2]).post();
+		model.arithm(rows[6][2], "<", rows[7][2]).post();
+		model.arithm(rows[7][2], ">", rows[8][2]).post();
+		//colonne4
+		model.arithm(rows[0][3], ">", rows[1][3]).post();
+		model.arithm(rows[1][3], "<", rows[2][3]).post();
+		model.arithm(rows[3][3], "<", rows[4][3]).post();
+		model.arithm(rows[4][3], ">", rows[5][3]).post();
+		model.arithm(rows[6][3], "<", rows[7][3]).post();
+		model.arithm(rows[7][3], ">", rows[8][3]).post();
+		//colonne5
+		model.arithm(rows[0][4], ">", rows[1][4]).post();
+		model.arithm(rows[1][4], "<", rows[2][4]).post();
+		model.arithm(rows[3][4], ">", rows[4][4]).post();
+		model.arithm(rows[4][4], "<", rows[5][4]).post();
+		model.arithm(rows[6][4], ">", rows[7][4]).post();
+		model.arithm(rows[7][4], ">", rows[8][4]).post();
+		//colonne6
+		model.arithm(rows[0][5], "<", rows[1][5]).post();
+		model.arithm(rows[1][5], "<", rows[2][5]).post();
+		model.arithm(rows[3][5], ">", rows[4][5]).post();
+		model.arithm(rows[4][5], "<", rows[5][5]).post();
+		model.arithm(rows[6][5], "<", rows[7][5]).post();
+		model.arithm(rows[7][5], "<", rows[8][5]).post();
+		//colonne7
+		model.arithm(rows[0][6], ">", rows[1][6]).post();
+		model.arithm(rows[1][6], "<", rows[2][6]).post();
+		model.arithm(rows[3][6], "<", rows[4][6]).post();
+		model.arithm(rows[4][6], ">", rows[5][6]).post();
+		model.arithm(rows[6][6], ">", rows[7][6]).post();
+		model.arithm(rows[7][6], "<", rows[8][6]).post();
+		//colonne8
+		model.arithm(rows[0][7], ">", rows[1][7]).post();
+		model.arithm(rows[1][7], ">", rows[2][7]).post();
+		model.arithm(rows[3][7], "<", rows[4][7]).post();
+		model.arithm(rows[4][7], "<", rows[5][7]).post();
+		model.arithm(rows[6][7], ">", rows[7][7]).post();
+		model.arithm(rows[7][7], "<", rows[8][7]).post();
+		//colonne9
+		model.arithm(rows[0][8], ">", rows[1][8]).post();
+		model.arithm(rows[1][8], ">", rows[2][8]).post();
+		model.arithm(rows[3][8], ">", rows[4][8]).post();
+		model.arithm(rows[4][8], "<", rows[5][8]).post();
+		model.arithm(rows[6][8], ">", rows[7][8]).post();
+		model.arithm(rows[7][8], "<", rows[8][8]).post();
 		// --------------------------------------
 
 
