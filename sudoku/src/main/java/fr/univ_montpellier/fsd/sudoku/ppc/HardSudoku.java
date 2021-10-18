@@ -1,4 +1,4 @@
-
+//Equipe : Filali Yasmine - Chemaou Doha
 package fr.univ_montpellier.fsd.sudoku.ppc;
 
 import org.apache.commons.cli.CommandLine;
@@ -22,8 +22,9 @@ public class HardSudoku {
 	private static long timeout = 3600000; // one hour
 
 	IntVar[][] rows, cols, shapes;
-
 	Model model;
+
+
 
 	public static void main(String[] args) throws ParseException {
 
@@ -37,7 +38,7 @@ public class HardSudoku {
 			formatter.printHelp("sudoku", options, true);
 			System.exit(0);
 		}
-		instance = 4;
+		instance = 9;
 		// Check arguments and options
 		for (Option opt : line.getOptions()) {
 			checkOption(line, opt.getLongOpt());
@@ -46,12 +47,13 @@ public class HardSudoku {
 		n = instance;
 		s = (int) Math.sqrt(n);
 
-		new Sudoku().solve();
+		new HardSudoku().solve();
+		new HardSudoku().solveAll();
 	}
 
 	public void solve() {
-
 		buildModel();
+
 		model.getSolver().showStatistics();
 		model.getSolver().solve();
 
@@ -66,6 +68,29 @@ public class HardSudoku {
 
 		System.out.println(st.toString());
 	}
+	public void solveAll() {
+
+		buildModel();
+
+		model.getSolver().showStatistics();
+		System.out.println("----------------------------------------------------------------------");
+		System.out.println("Toutes les Solutions");
+
+		while (model.getSolver().solve()) {
+
+			StringBuilder st = new StringBuilder(String.format("Sudoku -- %s\n", instance, " X ", instance));
+			st.append("\t");
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					st.append(rows[i][j]).append("\t\t\t");
+				}
+				st.append("\n\t");
+			}
+
+			System.out.println(st.toString());
+
+		}
+	}
 
 	public void buildModel() {
 		model = new Model();
@@ -73,10 +98,14 @@ public class HardSudoku {
 		rows = new IntVar[n][n];
 		cols = new IntVar[n][n];
 		shapes = new IntVar[n][n];
+
+
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
+
 				rows[i][j] = model.intVar("c_" + i + "_" + j, 1, n, false);
 				cols[j][i] = rows[i][j];
+
 			}
 		}
 
@@ -93,19 +122,36 @@ public class HardSudoku {
 		for (
 
 				int i = 0; i < n; i++) {
-			System.out.println(i);
 			model.allDifferent(rows[i], "AC").post();
 			model.allDifferent(cols[i], "AC").post();
 			model.allDifferent(shapes[i], "AC").post();
 		}
-
 		// --------------------------------------
 		// TODO: add constraints here
-
-		
-		
-		// --------------------------------------
-
+		for (int i = 0 ; i < n ; i++)
+			for (int j = 0 ; j < n ; j++) {
+				model.arithm(rows[0][0], "=", 8).post();
+				model.arithm(rows[1][2], "=", 3).post();
+				model.arithm(rows[1][3], "=", 6).post();
+				model.arithm(rows[2][1], "=", 7).post();
+				model.arithm(rows[2][4], "=", 9).post();
+				model.arithm(rows[2][6], "=", 2).post();
+				model.arithm(rows[3][1], "=", 5).post();
+				model.arithm(rows[3][5], "=", 7).post();
+				model.arithm(rows[4][4], "=", 4).post();
+				model.arithm(rows[4][5], "=", 5).post();
+				model.arithm(rows[4][6], "=", 7).post();
+				model.arithm(rows[5][3], "=", 1).post();
+				model.arithm(rows[5][7], "=", 3).post();
+				model.arithm(rows[6][2], "=", 1).post();
+				model.arithm(rows[6][7], "=", 6).post();
+				model.arithm(rows[6][8], "=", 8).post();
+				model.arithm(rows[7][2], "=", 8).post();
+				model.arithm(rows[7][3], "=", 5).post();
+				model.arithm(rows[7][7], "=", 1).post();
+				model.arithm(rows[8][1], "=", 9).post();
+				model.arithm(rows[8][6], "=", 4).post();
+			}
 	}
 
 	// Check all parameters values
@@ -153,3 +199,5 @@ public class HardSudoku {
 	}
 
 }
+
+
